@@ -1,7 +1,9 @@
-@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Oswald:wght@200;300;400;500;600;700&display=swap);
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Oswald:wght@200;
+
+300;400;500;600;700&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Oswald:200,300,regular,500,600,700);
 @import url(https://fonts.googleapis.com/css?family=Cormorant:300,regular,500,600,700,300italic,italic,500italic,600italic,700italic);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300italic,regular,italic,700,700italic);
-@import url(https://fonts.googleapis.com/css?family=Oswald:200,300,regular,500,600,700);
 @charset "UTF-8";
 @font-face {
   font-family: icons;
@@ -1653,82 +1655,6 @@ body {
   min-height: 100vh;
 }
 
-.catalog::before {
-  content: "";
-  position: absolute;
-  left: 5%;
-  top: 45%;
-  background: #7d2253;
-  -webkit-filter: blur(200px);
-          filter: blur(200px);
-  -webkit-transform: rotate(32.83deg);
-      -ms-transform: rotate(32.83deg);
-          transform: rotate(32.83deg);
-  z-index: 1;
-}
-
-@supports (width: clamp( 25rem , 16.4634146341rem  +  42.6829268293vw , 46.875rem )) {
-  .catalog::before {
-    width: clamp( 25rem , 16.4634146341rem  +  42.6829268293vw , 46.875rem );
-  }
-}
-
-@supports not (width: clamp( 25rem , 16.4634146341rem  +  42.6829268293vw , 46.875rem )) {
-  .catalog::before {
-    width: calc(25rem + 21.875 * (100vw - 20rem) / 51.25);
-  }
-}
-
-@supports (height: clamp( 18.75rem , 17.5304878049rem  +  6.0975609756vw , 21.875rem )) {
-  .catalog::before {
-    height: clamp( 18.75rem , 17.5304878049rem  +  6.0975609756vw , 21.875rem );
-  }
-}
-
-@supports not (height: clamp( 18.75rem , 17.5304878049rem  +  6.0975609756vw , 21.875rem )) {
-  .catalog::before {
-    height: calc(18.75rem + 3.125 * (100vw - 20rem) / 51.25);
-  }
-}
-
-.catalog::after {
-  content: "";
-  z-index: 1;
-  position: absolute;
-  right: 0%;
-  top: 40%;
-  background: #80ffe1;
-  -webkit-filter: blur(250px);
-          filter: blur(250px);
-  -webkit-transform: rotate(32.83deg);
-      -ms-transform: rotate(32.83deg);
-          transform: rotate(32.83deg);
-}
-
-@supports (width: clamp( 25rem , 13.2926829268rem  +  58.5365853659vw , 55rem )) {
-  .catalog::after {
-    width: clamp( 25rem , 13.2926829268rem  +  58.5365853659vw , 55rem );
-  }
-}
-
-@supports not (width: clamp( 25rem , 13.2926829268rem  +  58.5365853659vw , 55rem )) {
-  .catalog::after {
-    width: calc(25rem + 30 * (100vw - 20rem) / 51.25);
-  }
-}
-
-@supports (height: clamp( 18.75rem , 17.7743902439rem  +  4.8780487805vw , 21.25rem )) {
-  .catalog::after {
-    height: clamp( 18.75rem , 17.7743902439rem  +  4.8780487805vw , 21.25rem );
-  }
-}
-
-@supports not (height: clamp( 18.75rem , 17.7743902439rem  +  4.8780487805vw , 21.25rem )) {
-  .catalog::after {
-    height: calc(18.75rem + 2.5 * (100vw - 20rem) / 51.25);
-  }
-}
-
 .catalog .shell {
   background: rgba(0, 0, 0, 0.2);
   padding: 30px 30px 30px 50px;
@@ -2090,38 +2016,6 @@ body {
   top: 0;
   right: 0;
   z-index: 2;
-}
-
-.popular::before {
-  content: "";
-  position: absolute;
-  width: 700px;
-  height: 461.89px;
-  left: 65.42px;
-  top: 55%;
-  z-index: 1;
-  background: rgba(67, 255, 210, 0.47);
-  -webkit-filter: blur(200px);
-          filter: blur(200px);
-  -webkit-transform: rotate(32.83deg);
-      -ms-transform: rotate(32.83deg);
-          transform: rotate(32.83deg);
-}
-
-.popular::after {
-  content: "";
-  position: absolute;
-  width: 571.28px;
-  height: 396.43px;
-  left: 488.93px;
-  top: 55%;
-  z-index: 1;
-  background: #7d2253;
-  -webkit-filter: blur(150px);
-          filter: blur(150px);
-  -webkit-transform: rotate(32.83deg);
-      -ms-transform: rotate(32.83deg);
-          transform: rotate(32.83deg);
 }
 
 .popular__container {
@@ -2630,38 +2524,6 @@ body {
   .feedback img {
     max-width: calc(21.875rem + 28.125 * (100vw - 20rem) / 51.25);
   }
-}
-
-.feedback::before {
-  content: "";
-  position: absolute;
-  width: 471.28px;
-  height: 396.43px;
-  left: 65.42px;
-  top: 50%;
-  z-index: 1;
-  background: #7d2253;
-  -webkit-filter: blur(150px);
-          filter: blur(150px);
-  -webkit-transform: rotate(32.83deg);
-      -ms-transform: rotate(32.83deg);
-          transform: rotate(32.83deg);
-}
-
-.feedback::after {
-  content: "";
-  position: absolute;
-  width: 500px;
-  height: 461.89px;
-  left: 488.93px;
-  top: 55%;
-  z-index: 1;
-  background: rgba(67, 255, 210, 0.47);
-  -webkit-filter: blur(200px);
-          filter: blur(200px);
-  -webkit-transform: rotate(32.83deg);
-      -ms-transform: rotate(32.83deg);
-          transform: rotate(32.83deg);
 }
 
 .feedback__body {
@@ -3498,21 +3360,6 @@ textarea {
             flex-direction: row;
   }
 
-  .catalog::before {
-    top: 20%;
-    left: 20%;
-    -webkit-transform: rotate(-125deg);
-        -ms-transform: rotate(-125deg);
-            transform: rotate(-125deg);
-  }
-
-  .catalog::after {
-    top: 80%;
-    -webkit-transform: rotate(125deg);
-        -ms-transform: rotate(125deg);
-            transform: rotate(125deg);
-  }
-
   .catalog__content {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
@@ -3557,21 +3404,6 @@ textarea {
     display: none;
   }
 
-  .popular::before {
-    top: 20%;
-    left: 20%;
-    -webkit-transform: rotate(-125deg);
-        -ms-transform: rotate(-125deg);
-            transform: rotate(-125deg);
-  }
-
-  .popular::after {
-    top: 80%;
-    -webkit-transform: rotate(125deg);
-        -ms-transform: rotate(125deg);
-            transform: rotate(125deg);
-  }
-
   .popular__container {
     width: -webkit-fit-content;
     width: -moz-fit-content;
@@ -3600,21 +3432,6 @@ textarea {
     -webkit-box-flex: 1;
         -ms-flex: 1 1 35%;
             flex: 1 1 35%;
-  }
-
-  .feedback::before {
-    top: 80%;
-    -webkit-transform: rotate(125deg);
-        -ms-transform: rotate(125deg);
-            transform: rotate(125deg);
-  }
-
-  .feedback::after {
-    top: 20%;
-    left: 20%;
-    -webkit-transform: rotate(-125deg);
-        -ms-transform: rotate(-125deg);
-            transform: rotate(-125deg);
   }
 
   .examples::before {
