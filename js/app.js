@@ -1,18 +1,28 @@
 (() => {
     "use strict";
     const modules_flsModules = {};
-    function isWebp() {
-        function testWebP(callback) {
-            let webP = new Image;
-            webP.onload = webP.onerror = function() {
-                callback(2 == webP.height);
-            };
-            webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
+    let isMobile = {
+        Android: function() {
+            return navigator.userAgent.match(/Android/i);
+        },
+        BlackBerry: function() {
+            return navigator.userAgent.match(/BlackBerry/i);
+        },
+        iOS: function() {
+            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+        },
+        Opera: function() {
+            return navigator.userAgent.match(/Opera Mini/i);
+        },
+        Windows: function() {
+            return navigator.userAgent.match(/IEMobile/i);
+        },
+        any: function() {
+            return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
         }
-        testWebP((function(support) {
-            let className = true === support ? "webp" : "no-webp";
-            document.documentElement.classList.add(className);
-        }));
+    };
+    function addTouchClass() {
+        if (isMobile.any()) document.documentElement.classList.add("touch");
     }
     let _slideUp = (target, duration = 500, showmore = 0) => {
         if (!target.classList.contains("_slide")) {
@@ -210,9 +220,14 @@
     function cartInit() {
         if (document.querySelector(".cart-icon")) document.addEventListener("click", (function(e) {
             if (bodyLockStatus && e.target.closest(".cart-icon")) {
-                bodyLockToggle();
                 document.documentElement.classList.toggle("cart-open");
-                document.documentElement.querySelector(".cart__body").classList.toggle("active");
+                if (document.querySelector(".touch")) bodyLockToggle();
+            }
+        }));
+        if (document.querySelector(".cart-close")) document.addEventListener("click", (function(e) {
+            if (bodyLockStatus && e.target.closest(".cart-close")) {
+                document.documentElement.classList.toggle("cart-open");
+                if (document.querySelector(".touch")) bodyLockToggle();
             }
         }));
     }
@@ -3822,8 +3837,38 @@
             animOnScroll();
         }), 300);
     }
+    window.addEventListener("click", (function(event) {
+        let counter;
+        let del;
+        if ("plus" === event.target.dataset.action || "minus" === event.target.dataset.action) {
+            const counterWrapper = event.target.closest(".product__counter-wrapper");
+            counter = counterWrapper.querySelector("[data-counter]");
+        }
+        if (event.target.closest(".cart__product")) {
+            const delCard = document.querySelector("[data-del]");
+            del = delCard.querySelector("[data-del]");
+            event.target.closest(".cart__product").remove();
+        }
+        if ("plus" === event.target.dataset.action) counter.innerText = ++counter.innerText;
+        if ("minus" === event.target.dataset.action) if (parseInt(counter.innerText) > 1) counter.innerText = --counter.innerText;
+    }));
+    const cartWrapper = document.querySelector(".cart__products");
+    window.addEventListener("click", (function(event) {
+        console.log(event);
+        if (event.target.hasAttribute("data-cart")) {
+            const card = event.target.closest(".slider__item__slide");
+            const productInfo = {
+                id: card.dataset.id,
+                imgSrc: card.querySelector(".picture__slider").getAttribute("src"),
+                title: card.querySelector(".slider__title").innerText,
+                price: card.querySelector(".slider__price").innerText
+            };
+            const cartItemHTML = `<div class="cart__product" data-id="${productInfo.id}">\n\t\t\t\t\t\t\t\t<div class="product__image">\n\t\t\t\t\t\t\t\t\t<img src="${productInfo.imgSrc}" alt="">\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__titleCounter">\n\t\t\t\t\t\t\t\t\t<div class="product__title">${productInfo.title}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__counter-wrapper">\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="minus">-</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-current" data-counter>1</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="plus">+</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__priceDel">\n\t\t\t\t\t\t\t\t\t<div class="product__price">${productInfo.price}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__delete" data-del>Удалить</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>`;
+            cartWrapper.insertAdjacentHTML("beforeend", cartItemHTML);
+        }
+    }));
     window["FLS"] = true;
-    isWebp();
+    addTouchClass();
     menuInit();
     cartInit();
     spollers();

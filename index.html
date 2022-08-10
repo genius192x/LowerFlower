@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
 	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20220810145555">
+	<link rel="stylesheet" href="css/style.min.css?_v=20220811003825">
 	<!-- <meta name="robots" content="noindex, nofollow"> -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -63,10 +63,63 @@
 						<div type="button" class="header__shopping-cart  cart-icon _icon-handbag">
 
 						</div>
-						<div class="cart__body">
+						<div class="cart__body ">
 							<div class="cart__wrapper">
-								<div class="cart__close"></div>
+								<div class="cart__close cart-close"></div>
 								<div class="cart__title">Ваша корзина</div>
+								<div class="cart__products">
+									<div class="cart__product" data-id="01">
+										<div class="product__image">
+											<img src="img/Catalog/catalog_4.png" alt="">
+										</div>
+										<div class="product__titleCounter">
+											<div class="product__title">рубиновые искры</div>
+											<div class="product__counter-wrapper">
+												<div class="product__counter-control" data-action="minus">-</div>
+												<div class="product__counter-current" data-counter>1</div>
+												<div class="product__counter-control" data-action="plus">+</div>
+											</div>
+										</div>
+										<div class="product__priceDel">
+											<div class="product__price">167.00 ₽</div>
+											<div class="product__delete" data-del>Удалить</div>
+										</div>
+									</div>
+
+								</div>
+								<div class="cart__additionally">
+									<div class="additionally__title">Добавьте к заказу <span>Шары:</span></div>
+									<div class="additionally__cards">
+										<div class="additionally__card">
+											<div class="additionally__image">
+												<img src="img/stars.png" alt="">
+											</div>
+											<div class="additionally__text">
+												<div class="additionally__name">ШАР “ЗВЕЗДА”</div>
+												<div class="additionally__price">11.00 ₽</div>
+												<div class="additionally__add">Добавить</div>
+											</div>
+										</div>
+										<div class="additionally__card">
+											<div class="additionally__image">
+												<img src="img/hearth.png" alt="">
+											</div>
+											<div class="additionally__text">
+												<div class="additionally__name">ШАР “СЕРДЦЕ”</div>
+												<div class="additionally__price">11.00 ₽</div>
+												<div class="additionally__add">Добавить</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="cart__confirm">
+									<div class="confirm__result">Предварительный итог: 315.00 руб.</div>
+									<div class="confirm__description">Чтобы узнать стоимость доставки, перейдите к оформлению заказа.
+									</div>
+									<div class="confirm__order">
+										<a href="#"> <span>Оформить заказ</span> </a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -264,79 +317,79 @@
 									<img class="picture__slider" src="img/Catalog/catalog_8.png" alt="">
 								</div>
 								<div class="slider__title">
-									<p>лучший день</p>
+									Это
 								</div>
 								<div class="slider__price">
-									<p>167.000 ₽</p>
+									267.00 ₽
 								</div>
 
-								<button class="slider__button"><span>В корзину</span></button>
+								<button data-cart class="slider__button"><span>В корзину</span></button>
 							</div>
-							<div class="slider__item__slide swiper-slide">
+							<div class="slider__item__slide swiper-slide" data-id="01">
 								<div class="slider__picture">
 									<img class="picture__slider" src="img/Catalog/catalog_11.png" alt="">
 								</div>
 								<div class="slider__title">
-									<p>лучший день</p>
+									Просто
 								</div>
 								<div class="slider__price">
-									<p>167.000 ₽</p>
+									167.00 ₽
 								</div>
 
-								<button class="slider__button"><span>В корзину</span></button>
+								<button data-cart class="slider__button"><span>В корзину</span></button>
 							</div>
-							<div class="slider__item__slide swiper-slide">
+							<div class="slider__item__slide swiper-slide" data-id="02">
 								<div class="slider__picture">
 									<img class="picture__slider" src="img/Catalog/catalog_1.png" alt="">
 									<!-- <img class="sale" src="img/icons/Sale.svg" alt=""> -->
 								</div>
 								<div class="slider__title">
-									<p>лучший день</p>
+									Офигенно
 								</div>
 								<div class="slider__price">
-									<p>167.000 ₽</p>
+									367.00 ₽
 								</div>
 
-								<button class="slider__button"><span>В корзину</span></button>
+								<button data-cart class="slider__button"><span>В корзину</span></button>
 							</div>
-							<div class="slider__item__slide swiper-slide">
+							<div class="slider__item__slide swiper-slide" data-id="03">
 								<div class="slider__picture">
 									<img class="picture__slider" src="img/Catalog/catalog_4.png" alt="">
 								</div>
 								<div class="slider__title">
-									<p>лучший день</p>
+									я
 								</div>
 								<div class="slider__price">
-									<p>167.000 ₽</p>
+									467.00 ₽
 								</div>
 
-								<button class="slider__button"><span>В корзину</span></button>
+								<button data-cart class="slider__button"><span>В корзину</span></button>
 							</div>
-							<div class="slider__item__slide swiper-slide">
+							<div class="slider__item__slide swiper-slide" data-id="04">
 								<div class="slider__picture">
 									<img class="picture__slider" src="img/Catalog/catalog_5.png" alt="">
 								</div>
 								<div class="slider__title">
-									<p>лучший день</p>
+									ушел
 								</div>
 								<div class="slider__price">
-									<p>167.000 ₽</p>
+									567.00 ₽
 								</div>
 
-								<button class="slider__button"><span>В корзину</span></button>
+								<button data-cart class="slider__button"><span>В корзину</span></button>
 							</div>
-							<div class="slider__item__slide swiper-slide">
+							<div class="slider__item__slide swiper-slide" data-id="05">
 								<div class="slider__picture">
 									<img class="picture__slider" src="img/Catalog/catalog_6.png" alt="">
 								</div>
 								<div class="slider__title">
-									<p>лучший день</p>
+									спать
 								</div>
 								<div class="slider__price">
-									<p>167.000 ₽</p>
+									667.00 ₽
 								</div>
 
-								<button class="slider__button"><span>В корзину</span></button>
+								<button data-cart class="slider__button"><span>В корзину</span></button>
 							</div>
 						</div>
 						<!-- <div class="swiper-button-prev">
@@ -657,8 +710,8 @@
 			</div>
 		</div>
 	</div>
-	<script src="js/app.min.js?_v=20220810145555"></script>
-	<!-- <script src="../js/files/script.js?_v=20220810145555"></script> -->
+	<script src="js/app.min.js?_v=20220811003825"></script>
+	<!-- <script src="../js/files/script.js?_v=20220811003825"></script> -->
 </body>
 
 </html>
