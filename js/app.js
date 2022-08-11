@@ -3844,7 +3844,7 @@
             const counterWrapper = event.target.closest(".product__counter-wrapper");
             counter = counterWrapper.querySelector("[data-counter]");
         }
-        if (event.target.closest(".cart__product")) {
+        if (event.target.hasAttribute("data-del")) {
             const delCard = document.querySelector("[data-del]");
             del = delCard.querySelector("[data-del]");
             event.target.closest(".cart__product").remove();
@@ -3854,7 +3854,6 @@
     }));
     const cartWrapper = document.querySelector(".cart__products");
     window.addEventListener("click", (function(event) {
-        console.log(event);
         if (event.target.hasAttribute("data-cart")) {
             const card = event.target.closest(".slider__item__slide");
             const productInfo = {
@@ -3863,8 +3862,34 @@
                 title: card.querySelector(".slider__title").innerText,
                 price: card.querySelector(".slider__price").innerText
             };
-            const cartItemHTML = `<div class="cart__product" data-id="${productInfo.id}">\n\t\t\t\t\t\t\t\t<div class="product__image">\n\t\t\t\t\t\t\t\t\t<img src="${productInfo.imgSrc}" alt="">\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__titleCounter">\n\t\t\t\t\t\t\t\t\t<div class="product__title">${productInfo.title}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__counter-wrapper">\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="minus">-</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-current" data-counter>1</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="plus">+</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__priceDel">\n\t\t\t\t\t\t\t\t\t<div class="product__price">${productInfo.price}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__delete" data-del>Удалить</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>`;
-            cartWrapper.insertAdjacentHTML("beforeend", cartItemHTML);
+            const itemInCart = cartWrapper.querySelector(`[data-id='${productInfo.id}']`);
+            if (itemInCart) {
+                const counterElement = itemInCart.querySelector("[data-counter]");
+                counterElement.innerText = parseInt(counterElement.innerText) + 1;
+            } else {
+                const cartItemHTML = `<div class="cart__product" data-id="${productInfo.id}">\n\t\t\t\t\t\t\t\t<div class="product__image">\n\t\t\t\t\t\t\t\t\t<img src="${productInfo.imgSrc}" alt="">\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__titleCounter">\n\t\t\t\t\t\t\t\t\t<div class="product__title">${productInfo.title}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__counter-wrapper">\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="minus">-</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-current" data-counter>1</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="plus">+</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__priceDel">\n\t\t\t\t\t\t\t\t\t<div class="product__price">${productInfo.price}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__delete" data-del>Удалить</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>`;
+                cartWrapper.insertAdjacentHTML("beforeend", cartItemHTML);
+            }
+        }
+    }));
+    window.addEventListener("click", (function(event) {
+        let summCard = cartWrapper.querySelectorAll(".cart__product");
+        if (event.target.hasAttribute("data-cart")) {
+            const cartCounter = event.target.closest(".slider__item__slide");
+            const cartCounterBody = document.querySelector(".header__shopping-cart");
+            if (cartCounter) {
+                let cartCounterHTML = ` <div class="shopping__counter">\n\t\t\t\t\t\t<div class="shopping__background"></div>\n\t\t\t\t\t\t<div data-counterCart class="shopping__current">\n\t\t\t\t\t\t\t${summCard.length}\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>`;
+                cartCounterBody.insertAdjacentHTML("beforeend", cartCounterHTML);
+            }
+        }
+        if (event.target.hasAttribute("data-del")) {
+            const cartDel = event.target.closest(".cart__product");
+            const cartCounterBody = document.querySelector(".header__shopping-cart");
+            const cartCount = document.querySelector(".shopping__counter");
+            if (cartDel) if (summCard.length >= 1) {
+                const cartCounterHTML = ` <div class="shopping__counter">\n\t\t\t\t\t\t<div class="shopping__background"></div>\n\t\t\t\t\t\t<div data-counterCart class="shopping__current">\n\t\t\t\t\t\t\t${summCard.length}\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>`;
+                cartCounterBody.insertAdjacentHTML("beforeend", cartCounterHTML);
+            } else cartCount.remove();
         }
     }));
     window["FLS"] = true;
