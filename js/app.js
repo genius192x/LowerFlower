@@ -3871,6 +3871,32 @@
         initSliders();
     }));
     let addWindowScrollEvent = false;
+    function headerScroll() {
+        addWindowScrollEvent = true;
+        const header = document.querySelector("header.header");
+        const headerShow = header.hasAttribute("data-scroll-show");
+        const headerShowTimer = header.dataset.scrollShow ? header.dataset.scrollShow : 500;
+        const startPoint = header.dataset.scroll ? header.dataset.scroll : 1;
+        let scrollDirection = 0;
+        let timer;
+        document.addEventListener("windowScroll", (function(e) {
+            const scrollTop = window.scrollY;
+            clearTimeout(timer);
+            if (scrollTop >= startPoint) {
+                !header.classList.contains("header-scroll") ? header.classList.add("header-scroll") : null;
+                if (headerShow) {
+                    if (scrollTop > scrollDirection) header.classList.contains("header-show") ? header.classList.remove("header-show") : null; else !header.classList.contains("header-show") ? header.classList.add("header-show") : null;
+                    timer = setTimeout((() => {
+                        !header.classList.contains("header-show") ? header.classList.add("header-show") : null;
+                    }), headerShowTimer);
+                }
+            } else {
+                header.classList.contains("header-scroll") ? header.classList.remove("header-scroll") : null;
+                if (headerShow) header.classList.contains("header-show") ? header.classList.remove("header-show") : null;
+            }
+            scrollDirection = scrollTop <= 0 ? 0 : scrollTop;
+        }));
+    }
     setTimeout((() => {
         if (addWindowScrollEvent) {
             let windowScroll = new Event("windowScroll");
@@ -4070,10 +4096,18 @@
         }));
         priceTotal.innerText = totalPrice;
     }
+    function styleHeader() {
+        const header = document.querySelector("header");
+        document.querySelector(".preview__title ");
+        document.querySelector(".header__interractive");
+        if (isMobile.any()) header.dataset.scroll = "35";
+    }
+    styleHeader();
     window["FLS"] = true;
     addTouchClass();
     menuInit();
     cartInit();
     fullVHfix();
     spollers();
+    headerScroll();
 })();
