@@ -116,7 +116,7 @@ body {
 }
 
 body {
-  color: #fff;
+  color: hsl(0deg, 0%, 100%);
   line-height: 1;
   font-family: "Oswald";
   font-size: 1rem;
@@ -724,13 +724,52 @@ body::-webkit-scrollbar-thumb {
   border-radius: 10px;
 }
 
+.header {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+.header__title {
+  text-align: center;
+  font-family: "Cormorant";
+  font-style: normal;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: none;
+  opacity: 0;
+  -webkit-transition: all 1s ease-in;
+  -o-transition: all 1s ease-in;
+  transition: all 1s ease-in;
+}
+
+@supports (font-size: clamp( 1.125rem , 1.0762195122rem  +  0.243902439vw , 1.25rem )) {
+  .header__title {
+    font-size: clamp( 1.125rem , 1.0762195122rem  +  0.243902439vw , 1.25rem );
+  }
+}
+
+@supports not (font-size: clamp( 1.125rem , 1.0762195122rem  +  0.243902439vw , 1.25rem )) {
+  .header__title {
+    font-size: calc(1.125rem + 0.125 * (100vw - 20rem) / 51.25);
+  }
+}
+
 .header-scroll {
+  -webkit-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
   background-color: black;
   position: fixed;
   top: 0px;
   left: 0px;
   width: 100vw;
-  z-index: 200;
+  z-index: 500;
 }
 
 .corporat {
@@ -1056,7 +1095,7 @@ body::-webkit-scrollbar-thumb {
 .cart__body {
   display: none;
   padding: 20px;
-  background-color: #040a0a;
+  background-color: hsl(180deg, 43%, 3%);
   position: fixed;
   top: 0;
   width: 25%;
@@ -1085,7 +1124,7 @@ body::-webkit-scrollbar-thumb {
   -o-transition: all 1s ease 0s;
   transition: all 1s ease 0s;
   right: 0;
-  z-index: 200;
+  z-index: 10000;
 }
 
 .cart__wrapper {
@@ -1569,7 +1608,7 @@ body::-webkit-scrollbar-thumb {
 
 footer {
   width: 100%;
-  background-color: #040a0a;
+  background-color: hsl(180deg, 43%, 3%);
   padding: 15px;
 }
 
@@ -1723,14 +1762,11 @@ body {
   min-height: 100vh;
   font-family: "Oswald";
   background-color: #000;
+  padding-top: 50px;
 }
 
 .wrapper {
   min-height: 100vh;
-}
-
-.header-scroll .wrapper {
-  padding-top: 65px;
 }
 
 .bg-flower {
@@ -1770,6 +1806,7 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
   padding-top: 26px;
+  z-index: 100;
 }
 
 .menu-open .preview__location {
@@ -1795,7 +1832,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-top: 50px;
+  margin-top: 0px;
   text-align: center;
   font-family: "Cormorant";
   font-style: normal;
@@ -2078,6 +2115,7 @@ body {
 
 .catalog {
   position: relative;
+  margin-top: 100px;
   position: relative;
   min-height: 100vh;
 }
@@ -3552,6 +3590,14 @@ textarea {
     z-index: 200;
   }
 
+  .header-scroll .header__title {
+    -webkit-transition: all ease-in;
+    -o-transition: all ease-in;
+    transition: all ease-in;
+    display: block;
+    opacity: 1;
+  }
+
   .corporat {
     display: block;
     text-align: left;
@@ -3607,7 +3653,7 @@ textarea {
     -webkit-box-ordinal-group: 4;
         -ms-flex-order: 3;
             order: 3;
-    color: #fff;
+    color: hsl(0deg, 0%, 100%);
     text-decoration: underline;
   }
 
@@ -3731,7 +3777,7 @@ textarea {
 
   .menu__burger {
     padding: 10px;
-    background-color: #040a0a;
+    background-color: hsl(180deg, 43%, 3%);
     position: fixed;
     top: 0;
     width: 100%;
@@ -3765,7 +3811,11 @@ textarea {
   }
 
   .cart__body {
-    width: 90%;
+    width: 100%;
+  }
+
+  body {
+    padding-top: 0px;
   }
 
   .fullscreen {
@@ -3780,7 +3830,7 @@ textarea {
   }
 
   .preview__top {
-    margin-top: 100px;
+    margin-top: 50px;
   }
 
   .preview__subtitle {
@@ -4060,6 +4110,10 @@ textarea {
        object-fit: cover;
     -o-object-position: 48% 0px;
        object-position: 48% 0px;
+  }
+
+  .fullscreen::after {
+    bottom: -5%;
   }
 
   .preview__top {

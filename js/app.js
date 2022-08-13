@@ -3874,9 +3874,11 @@
     function headerScroll() {
         addWindowScrollEvent = true;
         const header = document.querySelector("header.header");
+        const title = document.querySelector(".preview__title ");
         const headerShow = header.hasAttribute("data-scroll-show");
         const headerShowTimer = header.dataset.scrollShow ? header.dataset.scrollShow : 500;
         const startPoint = header.dataset.scroll ? header.dataset.scroll : 1;
+        title.dataset.scroll && title.dataset.scroll;
         let scrollDirection = 0;
         let timer;
         document.addEventListener("windowScroll", (function(e) {
@@ -4077,7 +4079,6 @@
                 counterElement.innerText = parseInt(counterElement.innerText) + 1;
             } else {
                 const cartItemHTML = `<div class="cart__product" data-id="${productInfo.id}">\n\t\t\t\t\t\t\t\t<div class="product__image">\n\t\t\t\t\t\t\t\t\t<img src="${productInfo.imgSrc}" alt="">\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__titleCounter">\n\t\t\t\t\t\t\t\t\t<div class="product__title">${productInfo.title}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__counter-wrapper">\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="minus">-</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-current" data-counter>1</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="plus">+</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__priceDel">\n\t\t\t\t\t\t\t\t\t<div class="product__price">${productInfo.price}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__delete" data-del>Удалить</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>`;
-                console.log(itemInCart);
                 cartWrapper.insertAdjacentHTML("beforeend", cartItemHTML);
             }
         }
@@ -4096,13 +4097,6 @@
         }));
         priceTotal.innerText = totalPrice;
     }
-    function styleHeader() {
-        const header = document.querySelector("header");
-        document.querySelector(".preview__title ");
-        document.querySelector(".header__interractive");
-        if (isMobile.any()) header.dataset.scroll = "35";
-    }
-    styleHeader();
     window["FLS"] = true;
     addTouchClass();
     menuInit();
