@@ -4083,6 +4083,9 @@
             }
         }
         calcCartPrice();
+        document.querySelector(".search__wrap");
+        const searchWrap = document.querySelector(".search-form");
+        if (event.target.hasAttribute("data-search")) searchWrap.classList.toggle("search-active");
     }));
     function calcCartPrice() {
         document.querySelector(".cart__products");
