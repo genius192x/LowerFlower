@@ -3847,7 +3847,7 @@ textarea {
   }
 
   .fullscreen {
-    height: 110vh;
+    height: 100vh;
     background-size: cover;
     background-position: bottom;
     z-index: 1;
@@ -4142,6 +4142,10 @@ textarea {
        object-fit: cover;
     -o-object-position: 48% 0px;
        object-position: 48% 0px;
+  }
+
+  .fullscreen::after {
+    bottom: -12%;
   }
 
   .preview__top {
