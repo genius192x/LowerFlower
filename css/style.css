@@ -729,6 +729,7 @@ body::-webkit-scrollbar-thumb {
   top: 0px;
   left: 0px;
   width: 100vw;
+  z-index: 500;
   -webkit-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
@@ -769,7 +770,6 @@ body::-webkit-scrollbar-thumb {
   top: 0px;
   left: 0px;
   width: 100vw;
-  z-index: 500;
 }
 
 .corporat {
@@ -1823,6 +1823,7 @@ body {
   -webkit-transition: all 0.5s ease 0s;
   -o-transition: all 0.5s ease 0s;
   transition: all 0.5s ease 0s;
+  z-index: 100;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1967,6 +1968,7 @@ body {
 }
 
 .actions__socialnetwork {
+  z-index: 100;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4113,7 +4115,7 @@ textarea {
   }
 
   .fullscreen::after {
-    bottom: -5%;
+    bottom: -10%;
   }
 
   .preview__top {
