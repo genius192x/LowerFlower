@@ -3874,11 +3874,9 @@
     function headerScroll() {
         addWindowScrollEvent = true;
         const header = document.querySelector("header.header");
-        const title = document.querySelector(".preview__title ");
         const headerShow = header.hasAttribute("data-scroll-show");
         const headerShowTimer = header.dataset.scrollShow ? header.dataset.scrollShow : 500;
         const startPoint = header.dataset.scroll ? header.dataset.scroll : 1;
-        title.dataset.scroll && title.dataset.scroll;
         let scrollDirection = 0;
         let timer;
         document.addEventListener("windowScroll", (function(e) {
@@ -4083,9 +4081,6 @@
             }
         }
         calcCartPrice();
-        document.querySelector(".search__wrap");
-        const searchWrap = document.querySelector(".search-form");
-        if (event.target.hasAttribute("data-search")) searchWrap.classList.toggle("search-active");
     }));
     function calcCartPrice() {
         document.querySelector(".cart__products");
