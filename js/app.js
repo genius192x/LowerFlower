@@ -3943,161 +3943,9 @@
             destroy
         });
     }
-    function Autoplay(_ref) {
-        let {swiper, extendParams, on, emit} = _ref;
-        let timeout;
-        swiper.autoplay = {
-            running: false,
-            paused: false
-        };
-        extendParams({
-            autoplay: {
-                enabled: false,
-                delay: 3e3,
-                waitForTransition: true,
-                disableOnInteraction: true,
-                stopOnLastSlide: false,
-                reverseDirection: false,
-                pauseOnMouseEnter: false
-            }
-        });
-        function run() {
-            const $activeSlideEl = swiper.slides.eq(swiper.activeIndex);
-            let delay = swiper.params.autoplay.delay;
-            if ($activeSlideEl.attr("data-swiper-autoplay")) delay = $activeSlideEl.attr("data-swiper-autoplay") || swiper.params.autoplay.delay;
-            clearTimeout(timeout);
-            timeout = utils_nextTick((() => {
-                let autoplayResult;
-                if (swiper.params.autoplay.reverseDirection) if (swiper.params.loop) {
-                    swiper.loopFix();
-                    autoplayResult = swiper.slidePrev(swiper.params.speed, true, true);
-                    emit("autoplay");
-                } else if (!swiper.isBeginning) {
-                    autoplayResult = swiper.slidePrev(swiper.params.speed, true, true);
-                    emit("autoplay");
-                } else if (!swiper.params.autoplay.stopOnLastSlide) {
-                    autoplayResult = swiper.slideTo(swiper.slides.length - 1, swiper.params.speed, true, true);
-                    emit("autoplay");
-                } else stop(); else if (swiper.params.loop) {
-                    swiper.loopFix();
-                    autoplayResult = swiper.slideNext(swiper.params.speed, true, true);
-                    emit("autoplay");
-                } else if (!swiper.isEnd) {
-                    autoplayResult = swiper.slideNext(swiper.params.speed, true, true);
-                    emit("autoplay");
-                } else if (!swiper.params.autoplay.stopOnLastSlide) {
-                    autoplayResult = swiper.slideTo(0, swiper.params.speed, true, true);
-                    emit("autoplay");
-                } else stop();
-                if (swiper.params.cssMode && swiper.autoplay.running) run(); else if (false === autoplayResult) run();
-            }), delay);
-        }
-        function start() {
-            if ("undefined" !== typeof timeout) return false;
-            if (swiper.autoplay.running) return false;
-            swiper.autoplay.running = true;
-            emit("autoplayStart");
-            run();
-            return true;
-        }
-        function stop() {
-            if (!swiper.autoplay.running) return false;
-            if ("undefined" === typeof timeout) return false;
-            if (timeout) {
-                clearTimeout(timeout);
-                timeout = void 0;
-            }
-            swiper.autoplay.running = false;
-            emit("autoplayStop");
-            return true;
-        }
-        function pause(speed) {
-            if (!swiper.autoplay.running) return;
-            if (swiper.autoplay.paused) return;
-            if (timeout) clearTimeout(timeout);
-            swiper.autoplay.paused = true;
-            if (0 === speed || !swiper.params.autoplay.waitForTransition) {
-                swiper.autoplay.paused = false;
-                run();
-            } else [ "transitionend", "webkitTransitionEnd" ].forEach((event => {
-                swiper.$wrapperEl[0].addEventListener(event, onTransitionEnd);
-            }));
-        }
-        function onVisibilityChange() {
-            const document = ssr_window_esm_getDocument();
-            if ("hidden" === document.visibilityState && swiper.autoplay.running) pause();
-            if ("visible" === document.visibilityState && swiper.autoplay.paused) {
-                run();
-                swiper.autoplay.paused = false;
-            }
-        }
-        function onTransitionEnd(e) {
-            if (!swiper || swiper.destroyed || !swiper.$wrapperEl) return;
-            if (e.target !== swiper.$wrapperEl[0]) return;
-            [ "transitionend", "webkitTransitionEnd" ].forEach((event => {
-                swiper.$wrapperEl[0].removeEventListener(event, onTransitionEnd);
-            }));
-            swiper.autoplay.paused = false;
-            if (!swiper.autoplay.running) stop(); else run();
-        }
-        function onMouseEnter() {
-            if (swiper.params.autoplay.disableOnInteraction) stop(); else {
-                emit("autoplayPause");
-                pause();
-            }
-            [ "transitionend", "webkitTransitionEnd" ].forEach((event => {
-                swiper.$wrapperEl[0].removeEventListener(event, onTransitionEnd);
-            }));
-        }
-        function onMouseLeave() {
-            if (swiper.params.autoplay.disableOnInteraction) return;
-            swiper.autoplay.paused = false;
-            emit("autoplayResume");
-            run();
-        }
-        function attachMouseEvents() {
-            if (swiper.params.autoplay.pauseOnMouseEnter) {
-                swiper.$el.on("mouseenter", onMouseEnter);
-                swiper.$el.on("mouseleave", onMouseLeave);
-            }
-        }
-        function detachMouseEvents() {
-            swiper.$el.off("mouseenter", onMouseEnter);
-            swiper.$el.off("mouseleave", onMouseLeave);
-        }
-        on("init", (() => {
-            if (swiper.params.autoplay.enabled) {
-                start();
-                const document = ssr_window_esm_getDocument();
-                document.addEventListener("visibilitychange", onVisibilityChange);
-                attachMouseEvents();
-            }
-        }));
-        on("beforeTransitionStart", ((_s, speed, internal) => {
-            if (swiper.autoplay.running) if (internal || !swiper.params.autoplay.disableOnInteraction) swiper.autoplay.pause(speed); else stop();
-        }));
-        on("sliderFirstMove", (() => {
-            if (swiper.autoplay.running) if (swiper.params.autoplay.disableOnInteraction) stop(); else pause();
-        }));
-        on("touchEnd", (() => {
-            if (swiper.params.cssMode && swiper.autoplay.paused && !swiper.params.autoplay.disableOnInteraction) run();
-        }));
-        on("destroy", (() => {
-            detachMouseEvents();
-            if (swiper.autoplay.running) stop();
-            const document = ssr_window_esm_getDocument();
-            document.removeEventListener("visibilitychange", onVisibilityChange);
-        }));
-        Object.assign(swiper.autoplay, {
-            pause,
-            run,
-            start,
-            stop
-        });
-    }
     function initSliders() {
         if (document.querySelector(".swiper ")) new core(".swiper ", {
-            modules: [ Navigation, Pagination, Autoplay ],
+            modules: [ Navigation, Pagination ],
             observer: true,
             observeParents: true,
             slidesPerView: "auto",
@@ -4318,6 +4166,21 @@
         if (event.target.hasAttribute("data-action") && event.target.closest(".cart__products")) calcCartPrice();
     }));
     const cartWrapper = document.querySelector(".cart__products");
+    const animationCart = document.querySelectorAll(".slide__cart");
+    window.addEventListener("click", (function(event) {
+        if (event.target.hasAttribute("data-cart")) animationCart.forEach((function(item) {
+            item.classList.add("active");
+            function animateRemove() {
+                item.classList.remove("active");
+                item.classList.add("reActive");
+            }
+            function animateRemoveActive() {
+                item.classList.remove("reActive");
+            }
+            setTimeout(animateRemove, 1e3);
+            setTimeout(animateRemoveActive, 2e3);
+        }));
+    }));
     window.addEventListener("click", (function(event) {
         if (event.target.hasAttribute("data-cart")) {
             const card = event.target.closest(".popular__slide");
@@ -4369,6 +4232,33 @@
         }));
         priceTotal.innerText = totalPrice;
     }
+    window.addEventListener("click", (function(event) {
+        let summCard = cartWrapper.querySelectorAll(".cart__product");
+        if (event.target.hasAttribute("data-cart")) {
+            const cartCounter = event.target.closest(".popular__slide");
+            const cartCounterBody = document.querySelector(".header__shopping-cart");
+            let currentNum = parseInt(summCard.length);
+            if (cartCounter) {
+                if (summCard.length >= 0) {
+                    let cartCounterHTML = ` <div class="shopping__counter">\n\t\t\t\t\t\t<div class="shopping__background"></div>\n\t\t\t\t\t\t<div data-counterCart class="shopping__current">\n\t\t\t\t\t\t\t${currentNum}\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>`;
+                    cartCounterBody.insertAdjacentHTML("beforeend", cartCounterHTML);
+                }
+                console.log(currentNum);
+            }
+        }
+        if (event.target.hasAttribute("data-del")) {
+            const cartDel = event.target.closest(".cart__product");
+            const cartCounterBody = document.querySelector(".header__shopping-cart");
+            document.querySelector(".shopping__counter");
+            if (cartDel) if (summCard.length > 1) {
+                const cartCounterHTML = ` <div class="shopping__counter">\n\t\t\t\t\t\t<div class="shopping__background"></div>\n\t\t\t\t\t\t<div data-counterCart class="shopping__current">\n\t\t\t\t\t\t\t${parseInt(summCard.length)}\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>`;
+                cartCounterBody.insertAdjacentHTML("beforeend", cartCounterHTML);
+            } else if (summCard.length >= 0) {
+                const cartCounterHTML = ` <div class="shopping__counter">\n\t\t\t\t\t\t<div class="shopping__background"></div>\n\t\t\t\t\t\t<div data-counterCart class="shopping__current">\n\t\t\t\t\t\t\t${parseInt(summCard.length)}\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>`;
+                cartCounterBody.insertAdjacentHTML("beforeend", cartCounterHTML);
+            }
+        }
+    }));
     window["FLS"] = true;
     addTouchClass();
     menuInit();
