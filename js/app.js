@@ -4177,8 +4177,8 @@
             function animateRemoveActive() {
                 item.classList.remove("reActive");
             }
-            setTimeout(animateRemove, 1e3);
-            setTimeout(animateRemoveActive, 2e3);
+            setTimeout(animateRemove, 600);
+            setTimeout(animateRemoveActive, 1300);
         }));
     }));
     window.addEventListener("click", (function(event) {
