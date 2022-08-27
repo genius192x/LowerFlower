@@ -4233,31 +4233,19 @@
         priceTotal.innerText = totalPrice;
     }
     window.addEventListener("click", (function(event) {
-        let summCard = cartWrapper.querySelectorAll(".cart__product");
-        if (event.target.hasAttribute("data-cart")) {
-            const cartCounter = event.target.closest(".popular__slide");
-            const cartCounterBody = document.querySelector(".header__shopping-cart");
-            let currentNum = parseInt(summCard.length);
-            if (cartCounter) {
-                if (summCard.length >= 0) {
-                    let cartCounterHTML = ` <div class="shopping__counter">\n\t\t\t\t\t\t<div class="shopping__background"></div>\n\t\t\t\t\t\t<div data-counterCart class="shopping__current">\n\t\t\t\t\t\t\t${currentNum}\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>`;
-                    cartCounterBody.insertAdjacentHTML("beforeend", cartCounterHTML);
-                }
-                console.log(currentNum);
+        function updateCart() {
+            const cart = document.querySelector(".header__shopping-cart");
+            const cartCounter = `<span>1</span>`;
+            const cartQuantity = cart.querySelector("span");
+            if (event.target.hasAttribute("data-cart")) {
+                console.log("ura");
+                if (!cartQuantity) cart.insertAdjacentHTML("beforeend", cartCounter); else cartQuantity.innerHTML = ++cartQuantity.innerHTML;
+            } else if (event.target.hasAttribute("data-del")) {
+                const cartQuantityValue = --cartQuantity.innerHTML;
+                if (cartQuantityValue) cartQuantity.innerHTML = cartQuantityValue; else cartQuantity.remove();
             }
         }
-        if (event.target.hasAttribute("data-del")) {
-            const cartDel = event.target.closest(".cart__product");
-            const cartCounterBody = document.querySelector(".header__shopping-cart");
-            document.querySelector(".shopping__counter");
-            if (cartDel) if (summCard.length > 1) {
-                const cartCounterHTML = ` <div class="shopping__counter">\n\t\t\t\t\t\t<div class="shopping__background"></div>\n\t\t\t\t\t\t<div data-counterCart class="shopping__current">\n\t\t\t\t\t\t\t${parseInt(summCard.length)}\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>`;
-                cartCounterBody.insertAdjacentHTML("beforeend", cartCounterHTML);
-            } else if (summCard.length >= 0) {
-                const cartCounterHTML = ` <div class="shopping__counter">\n\t\t\t\t\t\t<div class="shopping__background"></div>\n\t\t\t\t\t\t<div data-counterCart class="shopping__current">\n\t\t\t\t\t\t\t${parseInt(summCard.length)}\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</div>`;
-                cartCounterBody.insertAdjacentHTML("beforeend", cartCounterHTML);
-            }
-        }
+        updateCart();
     }));
     window["FLS"] = true;
     addTouchClass();
