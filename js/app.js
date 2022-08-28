@@ -4243,7 +4243,7 @@
             } else if (event.target.hasAttribute("data-del")) {
                 const cartQuantityValue = --cartQuantity.innerHTML;
                 if (cartQuantityValue) cartQuantity.innerHTML = cartQuantityValue; else cartQuantity.remove();
-            }
+            } else if ("plus" === event.target.dataset.action) cartQuantity.innerHTML = ++cartQuantity.innerHTML; else if ("minus" === event.target.dataset.action) cartQuantity.innerHTML = --cartQuantity.innerHTML;
         }
         updateCart();
     }));
