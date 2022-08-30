@@ -4151,19 +4151,34 @@
     window.addEventListener("click", (function(event) {
         let counter;
         let del;
-        if ("plus" === event.target.dataset.action || "minus" === event.target.dataset.action) {
-            const counterWrapper = event.target.closest(".product__counter-wrapper");
+        if ("plus" === event.target.dataset.action || "minus" === event.target.dataset.action || event.target.hasAttribute("data-del")) {
+            const counterWrapper = event.target.closest(".cart__product");
             counter = counterWrapper.querySelector("[data-counter]");
         }
         if (event.target.hasAttribute("data-del")) {
-            const delCard = document.querySelector("[data-del]");
-            del = delCard.querySelector("[data-del]");
-            event.target.closest(".cart__product").remove();
+            if (parseInt(counter.innerText) > 1) {
+                const delCard = document.querySelector("[data-del]");
+                del = delCard.querySelector("[data-del]");
+                counter.innerText = --counter.innerText;
+            } else event.target.closest(".cart__product").remove();
             calcCartPrice();
         }
         if ("plus" === event.target.dataset.action) counter.innerText = ++counter.innerText;
-        if ("minus" === event.target.dataset.action) if (parseInt(counter.innerText) > 1) counter.innerText = --counter.innerText;
+        if ("minus" === event.target.dataset.action) if (parseInt(counter.innerText) > 1) counter.innerText = --counter.innerText; else {
+            event.target.closest(".cart__product").remove();
+            calcCartPrice();
+        }
         if (event.target.hasAttribute("data-action") && event.target.closest(".cart__products")) calcCartPrice();
+        function updateCart() {
+            const cart = document.querySelector(".header__shopping-cart");
+            const cartCounter = `<span>1</span>`;
+            const cartQuantity = cart.querySelector("span");
+            if (event.target.hasAttribute("data-cart")) if (!cartQuantity) cart.insertAdjacentHTML("beforeend", cartCounter); else cartQuantity.innerHTML = ++cartQuantity.innerHTML; else if (event.target.hasAttribute("data-del")) {
+                const cartQuantityValue = --cartQuantity.innerHTML;
+                if (cartQuantityValue) cartQuantity.innerHTML = cartQuantityValue; else cartQuantity.remove();
+            } else if ("plus" === event.target.dataset.action) cartQuantity.innerHTML = ++cartQuantity.innerHTML; else if ("minus" === event.target.dataset.action) if (parseInt(cartQuantity.innerText) > 1) cartQuantity.innerHTML = --cartQuantity.innerHTML; else cartQuantity.remove();
+        }
+        updateCart();
     }));
     const cartWrapper = document.querySelector(".cart__products");
     const animationCart = document.querySelectorAll(".slide__cart");
@@ -4232,21 +4247,6 @@
         }));
         priceTotal.innerText = totalPrice;
     }
-    window.addEventListener("click", (function(event) {
-        function updateCart() {
-            const cart = document.querySelector(".header__shopping-cart");
-            const cartCounter = `<span>1</span>`;
-            const cartQuantity = cart.querySelector("span");
-            if (event.target.hasAttribute("data-cart")) {
-                console.log("ura");
-                if (!cartQuantity) cart.insertAdjacentHTML("beforeend", cartCounter); else cartQuantity.innerHTML = ++cartQuantity.innerHTML;
-            } else if (event.target.hasAttribute("data-del")) {
-                const cartQuantityValue = --cartQuantity.innerHTML;
-                if (cartQuantityValue) cartQuantity.innerHTML = cartQuantityValue; else cartQuantity.remove();
-            } else if ("plus" === event.target.dataset.action) cartQuantity.innerHTML = ++cartQuantity.innerHTML; else if ("minus" === event.target.dataset.action) cartQuantity.innerHTML = --cartQuantity.innerHTML;
-        }
-        updateCart();
-    }));
     window["FLS"] = true;
     addTouchClass();
     menuInit();
