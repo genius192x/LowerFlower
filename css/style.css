@@ -976,10 +976,6 @@ body::-webkit-scrollbar-thumb {
   position: relative;
 }
 
-.catalog-open .spollers {
-  position: static;
-}
-
 .catalog__spoller {
   gap: 10px;
   text-align: left;
@@ -4373,7 +4369,7 @@ body {
   position: absolute;
   top: 20%;
   left: 0;
-  z-index: 1;
+  z-index: -1;
 }
 
 @supports (max-width: clamp( 12.5rem , 1.6463414634rem  +  54.2682926829vw , 40.3125rem )) {
@@ -4589,6 +4585,10 @@ body {
   color: #ffffff;
 }
 
+.guarantees {
+  z-index: 2;
+}
+
 .guarantees__title {
   max-width: 242px;
   font-family: "Cormorant";
@@ -4600,6 +4600,7 @@ body {
   text-transform: uppercase;
   position: relative;
   color: #43ffd2;
+  z-index: 2;
 }
 
 @supports (margin-top: clamp( 1.25rem , -0.7012195122rem  +  9.756097561vw , 6.25rem )) {
@@ -4645,7 +4646,6 @@ body {
   line-height: 26px;
   /* or 130% */
   letter-spacing: 0.04em;
-  z-index: 5;
   color: #ffffff;
 }
 
@@ -4766,6 +4766,7 @@ body {
   text-transform: uppercase;
   position: relative;
   color: white;
+  z-index: 2;
 }
 
 @supports (margin-top: clamp( 1.25rem , -0.7012195122rem  +  9.756097561vw , 6.25rem )) {
@@ -5271,6 +5272,188 @@ textarea {
 .map__box iframe {
   width: 100%;
   height: 100%;
+}
+
+.page__faq {
+  position: relative;
+}
+
+.top__blue {
+  position: absolute;
+  top: 20%;
+  right: 0;
+  z-index: 1;
+}
+
+@supports (max-width: clamp( 12.5rem , 4.0853658537rem  +  42.0731707317vw , 34.0625rem )) {
+  .top__blue {
+    max-width: clamp( 12.5rem , 4.0853658537rem  +  42.0731707317vw , 34.0625rem );
+  }
+}
+
+@supports not (max-width: clamp( 12.5rem , 4.0853658537rem  +  42.0731707317vw , 34.0625rem )) {
+  .top__blue {
+    max-width: calc(12.5rem + 21.5625 * (100vw - 20rem) / 51.25);
+  }
+}
+
+.middle__blue {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  z-index: 1;
+  -webkit-transform: scale(-1, 1);
+      -ms-transform: scale(-1, 1);
+          transform: scale(-1, 1);
+}
+
+@supports (max-width: clamp( 12.5rem , 4.0853658537rem  +  42.0731707317vw , 34.0625rem )) {
+  .middle__blue {
+    max-width: clamp( 12.5rem , 4.0853658537rem  +  42.0731707317vw , 34.0625rem );
+  }
+}
+
+@supports not (max-width: clamp( 12.5rem , 4.0853658537rem  +  42.0731707317vw , 34.0625rem )) {
+  .middle__blue {
+    max-width: calc(12.5rem + 21.5625 * (100vw - 20rem) / 51.25);
+  }
+}
+
+.page__faq {
+  position: relative;
+}
+
+.page__faq::after {
+  content: url("../img/blue-bg.png");
+  position: absolute;
+  top: 10%;
+  left: -10%;
+  z-index: -1;
+  -webkit-filter: brightness(1.5);
+          filter: brightness(1.5);
+}
+
+.page__faq::before {
+  content: url("../img/blue-bg.png");
+  position: absolute;
+  top: -10%;
+  right: -10%;
+  -webkit-filter: brightness(1.5);
+          filter: brightness(1.5);
+  z-index: -1;
+}
+
+.faq__title {
+  z-index: 2;
+}
+
+.questions__container {
+  margin-top: 40px;
+}
+
+.questions__items {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 10px;
+}
+
+.questions__item {
+  padding: 20px;
+  border: 1px solid #43ffd2;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+
+.questions__title {
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 400;
+  line-height: 30px;
+  /* identical to box height */
+  text-transform: uppercase;
+  color: #43ffd2;
+  cursor: pointer;
+  position: relative;
+}
+
+@supports (font-size: clamp( 1.125rem , 1.0762195122rem  +  0.243902439vw , 1.25rem )) {
+  .questions__title {
+    font-size: clamp( 1.125rem , 1.0762195122rem  +  0.243902439vw , 1.25rem );
+  }
+}
+
+@supports not (font-size: clamp( 1.125rem , 1.0762195122rem  +  0.243902439vw , 1.25rem )) {
+  .questions__title {
+    font-size: calc(1.125rem + 0.125 * (100vw - 20rem) / 51.25);
+  }
+}
+
+.questions__title::after,
+.questions__title::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  width: 20px;
+  height: 1px;
+  background-color: #43ffd2;
+}
+
+@supports (right: clamp( 0.3125rem , -0.0533536585rem  +  1.8292682927vw , 1.25rem )) {
+  .questions__title::after,
+  .questions__title::before {
+    right: clamp( 0.3125rem , -0.0533536585rem  +  1.8292682927vw , 1.25rem );
+  }
+}
+
+@supports not (right: clamp( 0.3125rem , -0.0533536585rem  +  1.8292682927vw , 1.25rem )) {
+  .questions__title::after,
+  .questions__title::before {
+    right: calc(0.3125rem + 0.9375 * (100vw - 20rem) / 51.25);
+  }
+}
+
+.questions__title::before {
+  -webkit-transform: rotate(90deg);
+      -ms-transform: rotate(90deg);
+          transform: rotate(90deg);
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.questions__title._spoller-active::before {
+  -webkit-transform: rotate(0deg);
+      -ms-transform: rotate(0deg);
+          transform: rotate(0deg);
+}
+
+.questions__text {
+  padding: 20px 50px 0px 0px;
+  font-family: "Oswald";
+  font-style: normal;
+  font-weight: 300;
+  line-height: 30px;
+  color: #ffffff;
+}
+
+@supports (font-size: clamp( 1rem , 0.9024390244rem  +  0.487804878vw , 1.25rem )) {
+  .questions__text {
+    font-size: clamp( 1rem , 0.9024390244rem  +  0.487804878vw , 1.25rem );
+  }
+}
+
+@supports not (font-size: clamp( 1rem , 0.9024390244rem  +  0.487804878vw , 1.25rem )) {
+  .questions__text {
+    font-size: calc(1rem + 0.25 * (100vw - 20rem) / 51.25);
+  }
 }
 
 .swiper {
@@ -6026,6 +6209,14 @@ textarea {
   .contacts__items::after {
     top: -30%;
   }
+
+  .top__blue {
+    top: 10%;
+  }
+
+  .questions__item {
+    padding: 10px;
+  }
 }
 
 @media (max-width: 47.99875em) {
@@ -6308,15 +6499,6 @@ textarea {
             justify-content: center;
   }
 
-  .delivery__conditions {
-    -webkit-transform: translate(-400%, 0%);
-        -ms-transform: translate(-400%, 0%);
-            transform: translate(-400%, 0%);
-    -webkit-transition: all 0.8s ease 0s;
-    -o-transition: all 0.8s ease 0s;
-    transition: all 0.8s ease 0s;
-  }
-
   .about-us__subtitle span::after {
     display: none;
   }
@@ -6372,5 +6554,9 @@ textarea {
   .popular__slide {
     width: 290;
     min-height: 380px;
+  }
+
+  .questions__title {
+    padding-right: 20px;
   }
 }

@@ -4179,10 +4179,6 @@
             } else if ("plus" === event.target.dataset.action) cartQuantity.innerHTML = ++cartQuantity.innerHTML; else if ("minus" === event.target.dataset.action) if (parseInt(cartQuantity.innerText) > 1) cartQuantity.innerHTML = --cartQuantity.innerHTML; else cartQuantity.remove();
         }
         updateCart();
-    }));
-    const cartWrapper = document.querySelector(".cart__products");
-    const animationCart = document.querySelectorAll(".slide__cart");
-    window.addEventListener("click", (function(event) {
         if (event.target.hasAttribute("data-cart")) animationCart.forEach((function(item) {
             item.classList.add("active");
             function animateRemove() {
@@ -4196,6 +4192,8 @@
             setTimeout(animateRemoveActive, 1300);
         }));
     }));
+    const cartWrapper = document.querySelector(".cart__products");
+    const animationCart = document.querySelectorAll(".slide__cart");
     window.addEventListener("click", (function(event) {
         if (event.target.hasAttribute("data-cart")) {
             const card = event.target.closest(".popular__slide");
