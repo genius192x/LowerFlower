@@ -719,16 +719,19 @@
             calcCartPrice();
         }
         if (event.target.hasAttribute("data-action") && event.target.closest(".cart__products")) calcCartPrice();
+        const cart = document.querySelector(".header__shopping-cart");
+        const cartCounter = `<span>1</span>`;
+        const cartQuantity = cart.querySelector("span");
         function updateCart() {
-            const cart = document.querySelector(".header__shopping-cart");
-            const cartCounter = `<span>1</span>`;
-            const cartQuantity = cart.querySelector("span");
-            if (event.target.hasAttribute("data-cart")) if (!cartQuantity) cart.insertAdjacentHTML("beforeend", cartCounter); else cartQuantity.innerHTML = ++cartQuantity.innerHTML; else if (event.target.hasAttribute("data-del")) {
+            if (event.target.hasAttribute("data-cart") || event.target.hasAttribute("data-additionallyy") || event.target.hasAttribute("data-cartCatalog")) if (!cartQuantity) cart.insertAdjacentHTML("beforeend", cartCounter); else cartQuantity.innerHTML = ++cartQuantity.innerHTML; else if (event.target.hasAttribute("data-del")) {
                 const cartQuantityValue = --cartQuantity.innerHTML;
                 if (cartQuantityValue) cartQuantity.innerHTML = cartQuantityValue; else cartQuantity.remove();
             } else if ("plus" === event.target.dataset.action) cartQuantity.innerHTML = ++cartQuantity.innerHTML; else if ("minus" === event.target.dataset.action) if (parseInt(cartQuantity.innerText) > 1) cartQuantity.innerHTML = --cartQuantity.innerHTML; else cartQuantity.remove();
         }
         updateCart();
+        const cartWrapper = document.querySelector(".cart__products");
+        const animationCart = document.querySelectorAll(".slide__cart");
+        const animationCartCatalog = document.querySelectorAll(".catalog__cart");
         if (event.target.hasAttribute("data-cart")) animationCart.forEach((function(item) {
             item.classList.add("active");
             function animateRemove() {
@@ -741,10 +744,18 @@
             setTimeout(animateRemove, 600);
             setTimeout(animateRemoveActive, 1300);
         }));
-    }));
-    const cartWrapper = document.querySelector(".cart__products");
-    const animationCart = document.querySelectorAll(".slide__cart");
-    window.addEventListener("click", (function(event) {
+        if (event.target.hasAttribute("data-cartCatalog")) animationCartCatalog.forEach((function(item) {
+            item.classList.add("active");
+            function animateRemove() {
+                item.classList.remove("active");
+                item.classList.add("reActive");
+            }
+            function animateRemoveActive() {
+                item.classList.remove("reActive");
+            }
+            setTimeout(animateRemove, 600);
+            setTimeout(animateRemoveActive, 1300);
+        }));
         if (event.target.hasAttribute("data-cart")) {
             const card = event.target.closest(".popular__slide");
             const productInfo = {
@@ -760,10 +771,20 @@
             } else {
                 const cartItemHTML = `<div class="cart__product" data-id="${productInfo.id}">\n\t\t\t\t\t\t\t\t<div class="product__image">\n\t\t\t\t\t\t\t\t\t<img src="${productInfo.imgSrc}" alt="">\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__titleCounter">\n\t\t\t\t\t\t\t\t\t<div class="product__title">${productInfo.title}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__counter-wrapper">\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="minus">-</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-current" data-counter>1</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="plus">+</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__priceDel">\n\t\t\t\t\t\t\t\t\t<div class="product__price">${productInfo.price}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__delete" data-del>Удалить</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>`;
                 cartWrapper.insertAdjacentHTML("beforeend", cartItemHTML);
+                objCart[productInfo.id] = {
+                    id: [ productInfo.id ],
+                    name: [ productInfo.title ],
+                    price: [ productInfo.price ],
+                    img: [ productInfo.image ]
+                };
+                console.log(objCart);
+                return objCart;
             }
             calcCartPrice();
         }
         if (event.target.hasAttribute("data-additionally")) {
+            console.log("работает");
+            if (!cartQuantity) cart.insertAdjacentHTML("beforeend", cartCounter); else cartQuantity.innerHTML = ++cartQuantity.innerHTML;
             const card = event.target.closest(".additionally__card");
             const productInfo = {
                 id: card.dataset.id,
@@ -780,7 +801,33 @@
                 cartWrapper.insertAdjacentHTML("beforeend", cartItemHTML);
             }
         }
+        let objCart = {};
+        if (event.target.hasAttribute("data-cartCatalog")) {
+            const card = event.target.closest(".catalog__item");
+            const productInfo = {
+                id: card.dataset.id,
+                imgSrc: card.querySelector(".image__catalog").getAttribute("src"),
+                title: card.querySelector(".label__title").innerText,
+                price: card.querySelector(".label__price").innerText
+            };
+            const itemInCart = cartWrapper.querySelector(`[data-id='${productInfo.id}']`);
+            if (itemInCart) {
+                const counterElement = itemInCart.querySelector("[data-counter]");
+                counterElement.innerText = parseInt(counterElement.innerText) + 1;
+            } else {
+                const cartItemHTML = `<div class="cart__product" data-id="${productInfo.id}">\n\t\t\t\t\t\t\t\t<div class="product__image">\n\t\t\t\t\t\t\t\t\t<img src="${productInfo.imgSrc}" alt="">\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__titleCounter">\n\t\t\t\t\t\t\t\t\t<div class="product__title">${productInfo.title}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__counter-wrapper">\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="minus">-</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-current" data-counter>1</div>\n\t\t\t\t\t\t\t\t\t\t<div class="product__counter-control" data-action="plus">+</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="product__priceDel">\n\t\t\t\t\t\t\t\t\t<div class="product__price">${productInfo.price}</div>\n\t\t\t\t\t\t\t\t\t<div class="product__delete" data-del>Удалить</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>`;
+                cartWrapper.insertAdjacentHTML("beforeend", cartItemHTML);
+                objCart[productInfo.id] = {
+                    id: productInfo.id,
+                    name: productInfo.title,
+                    price: productInfo.price,
+                    img: productInfo.imgSrc
+                };
+            }
+            calcCartPrice();
+        }
         calcCartPrice();
+        console.log(objCart);
     }));
     function calcCartPrice() {
         document.querySelector(".cart__products");
@@ -794,6 +841,7 @@
             totalPrice += currentPrice;
         }));
         priceTotal.innerText = totalPrice;
+        localStorage.setItem("totalPrice", totalPrice);
     }
     function initSliders() {
         if (document.querySelector(".swiper ")) new Swiper(".swiper ", {
@@ -839,6 +887,166 @@
             on: {}
         });
     }
+    const tags = document.querySelectorAll(".tags__item");
+    tags.forEach((function(item) {
+        item.addEventListener("click", (function(event) {
+            const xd = document.querySelector(".active__tags");
+            if (!item.classList.contains("active")) {
+                if (xd.childNodes.length <= 2) {
+                    item.classList.add("active");
+                    function addTag() {
+                        const activeTag = `<div class="active__tag">\n\t\t\t\t\t\t\t<div class="active__title">${item.innerText}</div> \n\t\t\t\t\t\t\t<div class="active__del">\n\t\t\t\t\t\t\t<div class="active__delFir"></div>\n\t\t\t\t\t\t\t<div class="active__delSec"></div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>`;
+                        const tagWrap = document.querySelector(".active__tags");
+                        tagWrap.insertAdjacentHTML("afterBegin", activeTag);
+                    }
+                    addTag();
+                } else alert("Выбрано максимальное колличетсво тегов");
+                let activeTags = document.getElementsByClassName("active__tag");
+                let arrayTag = Array.from(activeTags);
+                function removeTag() {
+                    if (activeTags) arrayTag.forEach((item => {
+                        const delTag = item.querySelectorAll(".active__del");
+                        delTag.forEach((function(keydel) {
+                            keydel.addEventListener("click", (() => {
+                                const tagTitle = item.querySelector(".active__title");
+                                tags.forEach((tag => {
+                                    if (tagTitle.innerText === tag.innerText) tag.classList.remove("active");
+                                }));
+                                item.remove();
+                            }));
+                        }));
+                    }));
+                }
+                removeTag();
+            } else {
+                function removeTags() {
+                    let activeTags = document.getElementsByClassName("active__tag");
+                    let arrayTag = Array.from(activeTags);
+                    arrayTag.forEach((elem => {
+                        const lowTagAct = elem.querySelectorAll(".active__title");
+                        const arrLowTagAct = Array.from(lowTagAct);
+                        arrLowTagAct.forEach((tag => {
+                            if (item.innerText == tag.innerText) elem.remove();
+                        }));
+                    }));
+                }
+                removeTags();
+                item.classList.remove("active");
+            }
+        }));
+    }));
+    const arrFlowers = [ {
+        id: 1,
+        name: "Весна",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_2.png",
+        typeFlower: "Розы",
+        color: "Белый"
+    }, {
+        id: 2,
+        name: "Любовь",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_5.png",
+        typeFlower: "Розы",
+        color: "Розовый"
+    }, {
+        id: 3,
+        name: "Близнецы",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_6.png",
+        typeFlower: "Mix",
+        color: "Оранжевый"
+    }, {
+        id: 4,
+        name: "Элегантность",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_9.png",
+        typeFlower: "Gladiolus",
+        color: "Желтый"
+    }, {
+        id: 5,
+        name: "Красота",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_7.png",
+        typeFlower: "Mix",
+        color: "Розовый"
+    }, {
+        id: 6,
+        name: "Инь-ЯН",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_3.png",
+        typeFlower: "Mix",
+        color: "Mix"
+    }, {
+        id: 7,
+        name: "Букет",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_1.png",
+        typeFlower: "Mix",
+        color: "Оранжевый"
+    }, {
+        id: 8,
+        name: "Зелень",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_4.png",
+        typeFlower: "Гладиолус",
+        color: "Зеленый"
+    }, {
+        id: 9,
+        name: "огонь",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_8.png",
+        typeFlower: "Лаванда",
+        color: "Бордовый "
+    }, {
+        id: 10,
+        name: "Розовые розы",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_10.png",
+        typeFlower: "Розы",
+        color: "Розовый"
+    }, {
+        id: 11,
+        name: "Желтые розы",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_11.png",
+        typeFlower: "Розы",
+        color: "Желтый"
+    }, {
+        id: 12,
+        name: "Синева",
+        price: 200,
+        rating: 5,
+        img: "img/Catalog/catalog_12.png",
+        typeFlower: "Индиго",
+        color: "Синий"
+    } ];
+    arrFlowers.forEach((item => {
+        class Product {
+            constructor(item) {
+                this.id = item.id;
+                this.name = item.name;
+                this.price = item.price;
+                this.rating = item.rating;
+                this.img = item.img;
+            }
+        }
+        const newFlower = new Product(item);
+        const productsWrapp = document.querySelector(".catalog__items");
+        const productsCreate = `<div class="catalog__item" data-id="${newFlower.id}">\n\t\t\t\t\t\t\t<div class="catalog__image"> <img class="image__catalog" src="${newFlower.img}" alt="">\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t<div class=" content-catalog">\n\t\t\t\t\t\t\t\t<div class="catalog__label">\n\t\t\t\t\t\t\t\t\t<div class="label__content">\n\t\t\t\t\t\t\t\t\t\t<div class="label__number">${newFlower.id}</div>\n\t\t\t\t\t\t\t\t\t\t<div class="label__line"></div>\n\t\t\t\t\t\t\t\t\t\t<div class="label__price">${newFlower.price} ₽</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t<div class="label__title">${newFlower.name}</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class="catalog__action">\n\t\t\t\t\t\t\t\t\t<div data-cartCatalog class="catalog__cart _icon-Shopping_Cart"></div>\n\t\t\t\t\t\t\t\t\t<div class="catalog__product _icon-Arrow_Left_MD"></div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>`;
+        if (productsWrapp) productsWrapp.insertAdjacentHTML("beforeend", productsCreate);
+    }));
     window.addEventListener("load", (function(e) {
         initSliders();
     }));
